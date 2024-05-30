@@ -1,8 +1,8 @@
 # llm-cli
 
-A command-line toolkit with several commands for interacting with popular language model APIs.
+`llm-cli` is a command-line toolkit offering a suite of commands for seamless interaction with popular language model APIs.
 
-To use the `llm-cli` toolkit, you need at least one API key from Google Gemini, DeepL, or Claude AI.
+`llm-cli` requires an API key from one of the following large language model providers: Google Gemini, DeepL, or Claude AI.
 
 ## Installation
 
@@ -100,13 +100,14 @@ DeepL API supports many languages. Please visit the [supported languages](https:
 
 ### `lt-llm-cli`
 
-For very long texts, you can use `lt-llm-cli`. It submits long texts multiple times by splitting them into smaller parts. You can override the sleep time and the number of lines per submission with the environment variables `LT_LINES` and `LT_SLEEP_SEC`.
+For exceptionally lengthy texts, you can utilize `lt-llm-cli`, which efficiently processes the content by dividing it into smaller segments and submitting them multiple times. To customize the number of lines per submission and the interval between each submission, you can set the environment variables `LT_LINES` and `LT_SLEEP_SEC`, respectively, allowing you to fine-tune the performance according to your specific requirements.
 
 ```sh
 cat very-long-text | lt-llm-cli deepl-cli KO > very-long-text.ko
 ```
 
-`lt-llm-cli` submits 200 lines at a time in the example below. To check the default values, please refer to [lt-llm-cli](https://github.com/9beach/llm-cli/blob/main/lt-llm-cli#L12).
+In the example below, `lt-llm-cli` submits text in chunks of 200 lines per request. To view the default values for various parameters, please refer to the [lt-llm-cli source code](https://github.com/9beach/llm-cli/blob/main/lt-llm-cli#L12).
+
 
 ```sh
 cat very-long-text | LT_LINES=200 lt-llm-cli deepl-cli KO > very-long-text.ko
@@ -120,7 +121,7 @@ cat very-long-text | lt-llm-cli claude-cli "Translate to Hungarian." > very-long
 cat very-long-text | lt-llm-cli gemini-cli "Translate to Hindi." > very-long-text.hi
 ```
 
-`lt-llm-cli` submits 100 lines at a time in the code below.
+`lt-llm-cli` submits 100 lines at a time in the example below.
 
 ```text
 cat very-long-text | LT_LINES=100 lt-llm-cli gemini-cli "Translate to Hindi." > very-long-text.hi
