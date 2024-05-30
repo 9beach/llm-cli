@@ -30,11 +30,19 @@ split -l $LT_LINES - $TEMPFILE
 
 for i in $TEMPFILE*; do
 	"$LT_CLI" "$LT_PARAM" < $i
+
+	# Retrying twice
 	if [ $? -ne 0 ]; then
 		>&2 echo "An error occurred, retrying..."
 		sleep $LT_SLEEP_SEC
-		$LT_CLI < $i
+		"$LT_CLI" "$LT_PARAM" < $i
 	fi
+	if [ $? -ne 0 ]; then
+		>&2 echo "An error occurred, retrying..."
+		sleep $LT_SLEEP_SEC
+		"$LT_CLI" "$LT_PARAM" < $i
+	fi
+
 	sleep $LT_SLEEP_SEC
 done
 
