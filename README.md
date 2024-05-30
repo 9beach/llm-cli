@@ -33,7 +33,7 @@ sudo chmod a+rx /usr/local/bin/gemini-cli /usr/local/bin/claude-cli /usr/local/b
 
 ```sh
 export ANTHROPIC_API_KEY="Your-API-Key"
-cat my-text | claude-cli "Translate to Hungarian with no comments."
+cat my-text | claude-cli "Translate to Hungarian without comments."
 ```
 
 An example output:
@@ -87,7 +87,7 @@ DeepL API supports many languages. Please visit the [supported languages](https:
 
 ### `lt-llm-cli`
 
-For very long texts, you can use `lt-llm-cli`. It submits a long text multiple times by splitting it into smaller parts.
+For very long texts, you can use `lt-llm-cli`. It submits long texts multiple times by splitting them into smaller parts. You can override the sleep time and the number of lines per submission with the environment variables `LT_LINES` and `LT_SLEEP_SEC`.
 
 ```sh
 cat very-long-text | lt-llm-cli deepl-cli KO > very-long-text.ko
