@@ -33,18 +33,26 @@ sudo chmod a+rx /usr/local/bin/gemini-cli /usr/local/bin/claude-cli /usr/local/b
 
 ```sh
 export ANTHROPIC_API_KEY="Your-API-Key"
-cat my-text | claude-cli "Translate to Hungarian without comments."
+cat my-text | claude-cli "refine the sentence"
 ```
 
 An example output:
 
 ```text
-ELSŐ RÉSZ
+The relationship between screen usage and sleep quality is more complex than 
+previously thought, according to recent findings from sleep experts.
+```
 
-I. FEJEZET
-A MOREL HÁZASPÁR KORAI HÁZASÉLETE
+In macOS, `pbpaste` outputs the content from the clipboard. For example:
 
-A "Bottoms" követte a "Hell Row"-t. A Hell Row szalmatetős, kidomborodó viskók tömbjéből állt, amelyek a Greenhill Lane patak partján sorakoztak. Itt éltek a bányászok, akik a két mezővel arrébb lévő kis gin-gödrökben dolgoztak.
+```sh
+pbpaste | claude-cli "What do you think?"
+```
+
+In Linux, `xclip -selection clipboard -o` outputs the content from the clipboard. For example:
+
+```sh
+xclip -selection clipboard -o | claude-cli "translate to korean"
 ```
 
 ### `gemini-cli`
@@ -63,6 +71,12 @@ An example output:
 ## मोरेल्स का प्रारंभिक विवाहित जीवन
 
 "बॉटम्स" "नरक पंक्ति" का उत्तराधिकारी बना। नरक पंक्ति झोपड़ियों का एक ऐसा समूह था जो ग्रीनहिल लेन पर नाले के किनारे पर स्थित था। वहाँ उन कोयला खनिकों रहते थे जो दो खेतों में स्थित छोटे कोयले के खदानों में काम करते थे।
+```
+
+You can try many things. For example:
+
+```sh
+cat my-text | gemini-cli "Is this correct?"
 ```
 
 ### `deepl-cli`
@@ -93,7 +107,7 @@ For very long texts, you can use `lt-llm-cli`. It submits long texts multiple ti
 cat very-long-text | lt-llm-cli deepl-cli KO > very-long-text.ko
 ```
 
-`lt-llm-cli` submits 200 lines at a time in the code below. To check the default values, please refer to `/usr/local/bin/lt-llm-cli`.
+`lt-llm-cli` submits 200 lines at a time in the example below. To check the default values, please refer to [`lt-llm-cli`](https://github.com/9beach/llm-cli/blob/f8f706861e774bdd07956d598edfeba29ef1cd57/lt-llm-cli#L12).
 
 ```sh
 cat very-long-text | LT_LINES=200 lt-llm-cli deepl-cli KO > very-long-text.ko

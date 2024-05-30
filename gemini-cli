@@ -7,8 +7,8 @@ if [ "$GEMINI_API_KEY" = "" ]; then
 fi
 
 if [ $# -ne 1 ]; then
-	>&2 echo "Please run this program with the specified command parameter."
-	>&2 echo 'For example: `cat my-text | '$0' "Translate to Korean."`'
+	>&2 echo "Please run this program with the specified command."
+	>&2 echo 'For example: `cat my-text | '$0' "Translate to Korean"`'
 	exit 1
 fi
 
@@ -16,4 +16,5 @@ curl \
 	-s \
 	-H 'Content-Type: application/json' \
 	-X POST "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=$GEMINI_API_KEY" \
-	-d "$(jq -Rs '{"contents":[{"parts":[{"text": . }]}]}' | sed -e "s/\"text\": \"/\"text\": \"$1:\n/")" | jq -r '.candidates[].content.parts[].text'
+	-d "$(jq -Rs '{"contents":[{"parts":[{"text": . }]}]}' | sed -e "s/\"text\": \"/\"text\": \"$1:\n/")" \
+	| jq -r '.candidates[].content.parts[].text'

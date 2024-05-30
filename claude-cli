@@ -2,7 +2,7 @@
 
 if [ "$ANTHROPIC_API_KEY" = "" ]; then
 	>&2 echo "Please export your ANTHROPIC_API_KEY."
-	>&2 echo 'For example: `export ANTHROPIC_API_KEY="sk-ant-api03-JZkHG..."`'
+	>&2 echo 'For example: `export ANTHROPIC_API_KEY="sk-ant-api03-JZ..."`'
 	exit 1
 fi
 
@@ -13,9 +13,9 @@ if [ $# -ne 1 ]; then
 fi
 
 curl https://api.anthropic.com/v1/messages \
-	-s \
+	--silent \
 	--header "x-api-key: $ANTHROPIC_API_KEY" \
 	--header "anthropic-version: 2023-06-01" \
 	--header "content-type: application/json" \
-	--data \
-"$(jq -Rs '{ model: "claude-3-opus-20240229", max_tokens: 1024, messages: [ {role: "user", content: . } ] }' | sed -e "s/\"content\": \"/\"content\": \"$1: /")" | jq -r '.content[] | .text'
+	--data "$(jq -Rs '{ model: "claude-3-opus-20240229", max_tokens: 1024, messages: [ {role: "user", content: . } ] }' | sed -e "s/\"content\": \"/\"content\": \"$1: /")" \
+	| jq -r '.content[] | .text'

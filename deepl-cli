@@ -7,14 +7,15 @@ if [ "$DEEPL_API_KEY" = "" ]; then
 fi
 
 if [ $# -ne 1 ]; then
-	>&2 echo "Please run this program with the target language parameter."
-	>&2 echo 'For example: `cat my-text | '$0' KO` or `cat my-text | '$0' EN`'
+	>&2 echo "Please run this program with the target language."
+	>&2 echo 'For example: `'$0' KO < my-text` or `cat my-text | '$0' EN`'
 	exit 1
 fi
 
 
 curl -X POST "https://api-free.deepl.com/v2/translate" \
---silent \
---header "Authorization: DeepL-Auth-Key $DEEPL_API_KEY" \
---header "Content-Type: application/json" \
---data "$(jq -Rs '{ "text": [ . ], "target_lang": '\"$1\"' }')" | jq -r '.translations[0].text'
+	--silent \
+	--header "Authorization: DeepL-Auth-Key $DEEPL_API_KEY" \
+	--header "Content-Type: application/json" \
+	--data "$(jq -Rs '{ "text": [ . ], "target_lang": '\"$1\"' }')" \
+	| jq -r '.translations[0].text'
