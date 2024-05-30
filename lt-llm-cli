@@ -1,0 +1,41 @@
+#!/bin/bash
+
+if [ $# -ne 2 ]; then
+	echo "Please specify the LLM CLI and the command."
+	echo 'For example: `'$0' deepl-cli KO` or `'$0' gemini-cli "Translate to Korean"`'
+	exit 1
+fi
+
+
+LT_CLI="$1"
+LT_PARAM="$2"
+
+if [ "$(basename "$LT_CLI")" = "deepl-cli" ]; then
+	LT_SLEEP_SEC=3
+	LT_LINES=100
+elif [ "$(basename "$LT_CLI")" = "gemini-cli" ]; then
+	LT_SLEEP_SEC=3
+	LT_LINES=50
+elif [ "$(basename "$LT_CLI")" = "claude-cli" ]; then
+	LT_SLEEP_SEC=3
+	LT_LINES=10
+else
+	echo "'$LT_CLI' is not a supported LLM."
+	exit 1
+fi
+
+TEMPFILE=$(mktemp); rm $TEMPFILE
+
+split -l $LT_LINES - $TEMPFILE
+
+for i in $TEMPFILE*; do
+	"$LT_CLI" "$LT_PARAM" < $i
+	if [ $? -ne 0 ]; then
+		>&2 echo "An error occurred, retrying..."
+		sleep $LT_SLEEP_SEC
+		$LT_CLI < $i
+	fi
+	sleep $LT_SLEEP_SEC
+done
+
+rm $TEMPFILE*

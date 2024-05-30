@@ -1,0 +1,20 @@
+#!/bin/bash
+
+if [ "$DEEPL_API_KEY" = "" ]; then
+	echo "Please export your DEEPL_API_KEY."
+	echo 'For example: `export DEEPL_API_KEY="d400341c-e4..."`'
+	exit 1
+fi
+
+if [ $# -ne 1 ]; then
+	echo "Please run this program with the target language parameter."
+	echo 'For example: `cat my-text | '$0' KO` or `cat my-text | '$0' EN`'
+	exit 1
+fi
+
+
+curl -X POST "https://api-free.deepl.com/v2/translate" \
+--silent \
+--header "Authorization: DeepL-Auth-Key $DEEPL_API_KEY" \
+--header "Content-Type: application/json" \
+--data "$(jq -Rs '{ "text": [ . ], "target_lang": '\"$1\"' }')" | jq -r '.translations[0].text'
