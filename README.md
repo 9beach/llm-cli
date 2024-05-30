@@ -6,7 +6,6 @@ To use the `llm-cli` toolkit, you need at least one API key from Google Gemini, 
 
 ## Installation
 
-
 First, install `jq`.
 
 ```sh
