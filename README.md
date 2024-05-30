@@ -6,6 +6,7 @@ To use the `llm-cli` toolkit, you need at least one API key from Google Gemini, 
 
 ## Installation
 
+
 First, install `jq`.
 
 ```sh
@@ -69,7 +70,7 @@ An example output:
 
 ```sh
 export DEEPL_API_KEY="Your-API-Key"
-cat my-text | ./deepl-cli KO
+cat my-text | deepl-cli KO
 ```
 
 An example output:
