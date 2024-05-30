@@ -50,7 +50,7 @@ A "Bottoms" követte a "Hell Row"-t. A Hell Row szalmatetős, kidomborodó visk�
 ### `gemini-cli`
 
 ```sh
-export GEMINI_API_KEY=="Your-API-Key"
+export GEMINI_API_KEY="Your-API-Key"
 cat my-text | gemini-cli "Translate to Hindi."
 ```
 
