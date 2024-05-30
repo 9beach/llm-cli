@@ -20,9 +20,15 @@ elif [ "$(basename "$LT_CLI")" = "claude-cli" ]; then
 	LT_SLEEP_SEC=3
 	LT_LINES=10
 else
-	echo "'$LT_CLI' is not a supported LLM."
+	>&2 echo "'$LT_CLI' is not a supported LLM."
 	exit 1
 fi
+
+function retry {
+	>&2 echo "An error occurred, retrying..."
+	sleep $LT_SLEEP_SEC
+	"$LT_CLI" "$LT_PARAM" < $1
+}
 
 TEMPFILE=$(mktemp); rm $TEMPFILE
 
@@ -33,14 +39,13 @@ for i in $TEMPFILE*; do
 
 	# Retrying twice
 	if [ $? -ne 0 ]; then
-		>&2 echo "An error occurred, retrying..."
-		sleep $LT_SLEEP_SEC
-		"$LT_CLI" "$LT_PARAM" < $i
+		retry $i
 	fi
 	if [ $? -ne 0 ]; then
-		>&2 echo "An error occurred, retrying..."
-		sleep $LT_SLEEP_SEC
-		"$LT_CLI" "$LT_PARAM" < $i
+		retry $i
+	fi
+	if [ $? -ne 0 ]; then
+		>&2 echo "Failed to process a part of the input"
 	fi
 
 	sleep $LT_SLEEP_SEC
