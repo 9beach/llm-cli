@@ -51,7 +51,7 @@ for i in $TEMPFILE*; do
 
 	# Give up this part
 	if [ $? -ne 0 ]; then
-		>&2 echo -e "\e[31mFailed to process a part of the input. This is an unrecoverable error.\e[0m"
+		>&2 echo -e "\033[31mFailed to process a part of the input. This is an unrecoverable error.\033[0m"
 	fi
 
 	sleep $LT_SLEEP_SEC
