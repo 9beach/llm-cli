@@ -8,7 +8,7 @@ fi
 
 if [ $# -ne 1 ]; then
 	echo "Please run this program with the specified command parameter."
-	echo 'For example: `cat my-text | gemini-translate.sh "Translate to Korean."`'
+	echo 'For example: `cat my-text | '$0' "Translate to Korean."`'
 	exit 1
 fi
 
