@@ -1,14 +1,14 @@
 #!/bin/bash
 
 if [ "$DEEPL_API_KEY" = "" ]; then
-	echo "Please export your DEEPL_API_KEY."
-	echo 'For example: `export DEEPL_API_KEY="d400341c-e4..."`'
+	>&2 echo "Please export your DEEPL_API_KEY."
+	>&2 echo 'For example: `export DEEPL_API_KEY="d400341c-e4..."`'
 	exit 1
 fi
 
 if [ $# -ne 1 ]; then
-	echo "Please run this program with the target language parameter."
-	echo 'For example: `cat my-text | '$0' KO` or `cat my-text | '$0' EN`'
+	>&2 echo "Please run this program with the target language parameter."
+	>&2 echo 'For example: `cat my-text | '$0' KO` or `cat my-text | '$0' EN`'
 	exit 1
 fi
 

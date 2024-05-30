@@ -1,8 +1,8 @@
 #!/bin/bash
 
 if [ $# -ne 2 ]; then
-	echo "Please specify the LLM CLI and the command."
-	echo 'For example: `'$0' deepl-cli KO` or `'$0' gemini-cli "Translate to Korean"`'
+	>&2 echo "Please specify the LLM CLI and the command."
+	>&2 echo 'For example: `'$0' deepl-cli KO` or `'$0' gemini-cli "Translate to Korean"`'
 	exit 1
 fi
 

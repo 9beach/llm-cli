@@ -1,14 +1,14 @@
 #!/bin/bash
 
 if [ "$ANTHROPIC_API_KEY" = "" ]; then
-	echo "Please export your ANTHROPIC_API_KEY."
-	echo 'For example: `export ANTHROPIC_API_KEY="sk-ant-api03-JZkHG..."`'
+	>&2 echo "Please export your ANTHROPIC_API_KEY."
+	>&2 echo 'For example: `export ANTHROPIC_API_KEY="sk-ant-api03-JZkHG..."`'
 	exit 1
 fi
 
 if [ $# -ne 1 ]; then
-	echo "Please run this program with the specified command parameter."
-	echo 'For example: `cat my-text | '$0' "Translate to Korean."`'
+	>&2 echo "Please run this program with the specified command parameter."
+	>&2 echo 'For example: `cat my-text | '$0' "Translate to Korean."`'
 	exit 1
 fi
 

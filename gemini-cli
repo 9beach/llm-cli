@@ -1,14 +1,14 @@
 #!/bin/bash
 
 if [ "$GEMINI_API_KEY" = "" ]; then
-	echo "Please export your GEMINI_API_KEY."
-	echo 'For example: `export GEMINI_API_KEY="AIzaSyBLyhX_prFkFb..."`'
+	>&2 echo "Please export your GEMINI_API_KEY."
+	>&2 echo 'For example: `export GEMINI_API_KEY="AIzaSyBLyhX_prFkFb..."`'
 	exit 1
 fi
 
 if [ $# -ne 1 ]; then
-	echo "Please run this program with the specified command parameter."
-	echo 'For example: `cat my-text | '$0' "Translate to Korean."`'
+	>&2 echo "Please run this program with the specified command parameter."
+	>&2 echo 'For example: `cat my-text | '$0' "Translate to Korean."`'
 	exit 1
 fi
 
