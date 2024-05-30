@@ -23,7 +23,6 @@ sudo curl -L https://raw.githubusercontent.com/9beach/llm-cli/main/gemini-cli -o
 sudo curl -L https://raw.githubusercontent.com/9beach/llm-cli/main/claude-cli -o /usr/local/bin/claude-cli
 sudo curl -L https://raw.githubusercontent.com/9beach/llm-cli/main/deepl-cli -o /usr/local/bin/deepl-cli
 sudo curl -L https://raw.githubusercontent.com/9beach/llm-cli/main/lt-llm-cli -o /usr/local/bin/lt-llm-cli
-
 sudo chmod a+rx /usr/local/bin/gemini-cli /usr/local/bin/claude-cli /usr/local/bin/deepl-cli /usr/local/bin/lt-llm-cli
 ```
 
@@ -107,7 +106,7 @@ For very long texts, you can use `lt-llm-cli`. It submits long texts multiple ti
 cat very-long-text | lt-llm-cli deepl-cli KO > very-long-text.ko
 ```
 
-`lt-llm-cli` submits 200 lines at a time in the example below. To check the default values, please refer to [`lt-llm-cli`](https://github.com/9beach/llm-cli/blob/f8f706861e774bdd07956d598edfeba29ef1cd57/lt-llm-cli#L12).
+`lt-llm-cli` submits 200 lines at a time in the example below. To check the default values, please refer to [lt-llm-cli](https://github.com/9beach/llm-cli/blob/main/lt-llm-cli#L12).
 
 ```sh
 cat very-long-text | LT_LINES=200 lt-llm-cli deepl-cli KO > very-long-text.ko
