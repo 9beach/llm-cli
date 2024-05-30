@@ -93,10 +93,22 @@ For very long texts, you can use `lt-llm-cli`. It submits a long text multiple t
 cat very-long-text | lt-llm-cli deepl-cli KO > very-long-text.ko
 ```
 
+`lt-llm-cli` submits 200 lines at a time in the code below. To check the default values, please refer to `/usr/local/bin/lt-llm-cli`.
+
+```sh
+cat very-long-text | LT_LINES=200 lt-llm-cli deepl-cli KO > very-long-text.ko
+```
+
 ```text
 cat very-long-text | lt-llm-cli claude-cli "Translate to Hungarian." > very-long-text.hu
 ```
 
 ```text
 cat very-long-text | lt-llm-cli gemini-cli "Translate to Hindi." > very-long-text.hi
+```
+
+`lt-llm-cli` submits 100 lines at a time in the code below.
+
+```text
+cat very-long-text | LT_LINES=100 lt-llm-cli gemini-cli "Translate to Hindi." > very-long-text.hi
 ```

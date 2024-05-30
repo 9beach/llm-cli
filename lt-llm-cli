@@ -11,14 +11,26 @@ LT_CLI="$1"
 LT_PARAM="$2"
 
 if [ "$(basename "$LT_CLI")" = "deepl-cli" ]; then
-	LT_SLEEP_SEC=3
-	LT_LINES=100
+	if [ "$LT_SLEEP_SEC" = "" ]; then
+		LT_SLEEP_SEC=3
+	fi
+	if [ "$LT_LINES" = "" ]; then
+		LT_LINES=100
+	fi
 elif [ "$(basename "$LT_CLI")" = "gemini-cli" ]; then
-	LT_SLEEP_SEC=3
-	LT_LINES=50
+	if [ "$LT_SLEEP_SEC" = "" ]; then
+		LT_SLEEP_SEC=3
+	fi
+	if [ "$LT_LINES" = "" ]; then
+		LT_LINES=50
+	fi
 elif [ "$(basename "$LT_CLI")" = "claude-cli" ]; then
-	LT_SLEEP_SEC=3
-	LT_LINES=10
+	if [ "$LT_SLEEP_SEC" = "" ]; then
+		LT_SLEEP_SEC=3
+	fi
+	if [ "$LT_LINES" = "" ]; then
+		LT_LINES=10
+	fi
 else
 	>&2 echo "'$LT_CLI' is not a supported LLM."
 	exit 1
