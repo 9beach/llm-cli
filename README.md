@@ -24,7 +24,7 @@ sudo curl -L https://raw.githubusercontent.com/9beach/llm-cli/main/claude-cli -o
 sudo curl -L https://raw.githubusercontent.com/9beach/llm-cli/main/deepl-cli -o /usr/local/bin/deepl-cli
 sudo curl -L https://raw.githubusercontent.com/9beach/llm-cli/main/lt-llm-cli -o /usr/local/bin/lt-llm-cli
 
-sudo chmod a+rx /usr/local/bin/gemini-cli /usr/local/bin/claude-cli /usr/local/bin/lt-llm-cli
+sudo chmod a+rx /usr/local/bin/gemini-cli /usr/local/bin/claude-cli /usr/local/bin/deepl-cli /usr/local/bin/lt-llm-cli
 ```
 
 ## Usage
@@ -33,7 +33,7 @@ sudo chmod a+rx /usr/local/bin/gemini-cli /usr/local/bin/claude-cli /usr/local/b
 
 ```sh
 export ANTHROPIC_API_KEY="Your-API-Key"
-cat my-text | claude-cli "Translate to Hungarian."
+cat my-text | claude-cli "Translate to Hungarian with no comments."
 ```
 
 An example output:
@@ -42,9 +42,9 @@ An example output:
 ELSŐ RÉSZ
 
 I. FEJEZET
-A MOREL CSALÁD KORAI HÁZASÉLETE
+A MOREL HÁZASPÁR KORAI HÁZASÉLETE
 
-A "Bottoms" követte a "Hell Row"-t. A Hell Row egy zsúptetős, kidomborodó házikókból álló tömb volt, amely a patak partján állt a Greenhill Lane-en. Itt éltek a szénbányászok, akik a két mezőnyire lévő kis gin-aknákban dolgoztak. A patak az égerfa alatt futott, alig szennyezve ezektől a kis bányáktól, amelyeknek a szénét szamarak vonták a felszínre, fáradtan körbe-körbe járva egy gin körül. Az egész vidéken mindenütt ugyanilyen aknák voltak, amelyek közül néhányat még II. Károly idejében is műveltek. A szénbányászok és a szamarak hangyaként turkáltak a földbe, furcsa halmokat és kis fekete foltokat hagyva a kukoricaföldek és rétek között. Ezeknek a szénbányászoknak a kunyhói, tömbökben és párokban itt-ott, együtt a harisnyakötők szórványos farmjaival és otthonaival, amelyek a plébánián kóboroltak, alkották Bestwood faluját.
+A "Bottoms" követte a "Hell Row"-t. A Hell Row szalmatetős, kidomborodó viskók tömbjéből állt, amelyek a Greenhill Lane patak partján sorakoztak. Itt éltek a bányászok, akik a két mezővel arrébb lévő kis gin-gödrökben dolgoztak.
 ```
 
 ### `gemini-cli`
@@ -59,10 +59,10 @@ An example output:
 ```text
 ## भाग एक
 
-## अध्याय 1
-## मोरल्स का प्रारंभिक वैवाहिक जीवन
+## अध्याय I
+## मोरेल्स का प्रारंभिक विवाहित जीवन
 
-"बॉटम्स" "हॅल रो" की जगह ले लिया। हॅल रो हरित पहाड़ी लेन पर, नाले के किनारे स्थित, झोंपड़ी-जैसे, उभरे हुए घरों काएक ब्लॉक था। वहां वे कोयला खनिक रहते थे जो दो खेतों दूर छोटे जिन-पिट में काम करते थे। नाला एल्डर के पेड़ों के नीचे सेबहता था, जो इन छोटी खानों से मुश्किल से ही दूषित था, जिनका कोयला गधे द्वारा सतह पर लाया जाता था, जो एक जिन के चारोंओर एक सर्कल में थकावट से चलते थे। और इसी तरह के गड्ढे पूरे ग्रामीण इलाके में थे, जिनमें से कुछ चार्ल्स द्वितीय के समय से काम कर रहे थे, कुछ कोयला खनिक और गधे चींटियों की तरह पृथ्वी में खुदाई करते थे, मक्का के खेतों और घास केमैदानों में अजीबोगरीब टीले और छोटे काले स्थान बनाते थे। और इन कोयला खनिकों के कॉटेज, ब्लॉक और जोड़े में यहां-वहां, स्टॉकिंगर के अनोखे खेतों और घरों के साथ, पल्ली के ऊपर फैले हुए, बेस्टवुड गांव का निर्माण करते थे।
+"बॉटम्स" "नरक पंक्ति" का उत्तराधिकारी बना। नरक पंक्ति झोपड़ियों का एक ऐसा समूह था जो ग्रीनहिल लेन पर नाले के किनारे पर स्थित था। वहाँ उन कोयला खनिकों रहते थे जो दो खेतों में स्थित छोटे कोयले के खदानों में काम करते थे।
 ```
 
 ### `deepl-cli`
@@ -93,14 +93,10 @@ For very long texts, you can use `lt-llm-cli`. It submits a long text multiple t
 cat very-long-text | lt-llm-cli deepl-cli KO > very-long-text.ko
 ```
 
-or
-
 ```text
 cat very-long-text | lt-llm-cli claude-cli "Translate to Hungarian." > very-long-text.hu
 ```
 
-or
-
 ```text
-cat very-long-text | lt-llm-cli gemini-cli "Translate to Hungarian." > very-long-text.hi
+cat very-long-text | lt-llm-cli gemini-cli "Translate to Hindi." > very-long-text.hi
 ```
