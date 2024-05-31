@@ -9,8 +9,12 @@ fi
 LT_CLI="$1"
 LT_PARAM="$2"
 
+GRAY='\033[1;37m'
+RED='\033[31m'
+NOCOLOR='\033[0m'
+
 if [ -z "$LT_SLEEP_SEC" ]; then
-	LT_SLEEP_SEC=3
+	LT_SLEEP_SEC=4
 fi
 
 case $(basename "$LT_CLI") in
@@ -28,10 +32,26 @@ case $(basename "$LT_CLI") in
 		exit 1
 esac
 
+REAL_FIRST="yes"
+
+function try_once {
+	if [ "$REAL_FIRST" = "yes" ]; then
+		REAL_FIRST="no"
+	else 
+		sleep $LT_SLEEP_SEC
+	fi
+
+	"$LT_CLI" "$LT_PARAM" < "$1"
+	LAST_ERROR=$?
+
+	if [ "$LT_VERBOSE" = "yes" ] && [ $LAST_ERROR -eq 0 ]; then
+		>&2 echo -e "${GRAY}A part has been successfully translated.${NOCOLOR}"
+	fi
+}
+
 function retry {
-	>&2 echo "An error occurred, retrying..."
-	sleep $LT_SLEEP_SEC
-	"$LT_CLI" "$LT_PARAM" < $1
+	>&2 echo "${GRAY}An error occurred, retrying in $LT_SLEEP_SEC seconds.${NOCOLOR}"
+	try_once $1
 }
 
 TEMPFILE=$(mktemp)
@@ -43,22 +63,14 @@ for i in $TEMPFILE*; do
 		>&2 echo "Empty input."
 		exit 1
 	fi
-	"$LT_CLI" "$LT_PARAM" < $i
+	try_once "$i"
 
 	# Retrying twice
-	if [ $? -ne 0 ]; then
-		retry $i
-	fi
-	if [ $? -ne 0 ]; then
-		retry $i
-	fi
+	[ $LAST_ERROR -ne 0 ] && retry $i
+	[ $LAST_ERROR -ne 0 ] && retry $i
 
 	# Give up this part
-	if [ $? -ne 0 ]; then
-		>&2 echo -e "\033[31mFailed to process a part of the input. This is an unrecoverable error.\033[0m"
-	fi
-
-	sleep $LT_SLEEP_SEC
+	[ $LAST_ERROR -ne 0 ] && >&2 echo -e "${RED}Failed to process a part of the input.${NOCOLOR}"
 done
 
 rm $TEMPFILE*
