@@ -63,6 +63,7 @@ for i in $TEMPFILE*; do
 		>&2 echo "Empty input."
 		exit 1
 	fi
+
 	try_once "$i"
 
 	# Retrying twice

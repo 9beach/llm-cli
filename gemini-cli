@@ -12,9 +12,31 @@ if [ $# -ne 1 ]; then
 	exit 1
 fi
 
+JSON="$(mktemp)"
+
 curl \
 	-s \
 	-H 'Content-Type: application/json' \
 	-X POST "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=$GEMINI_API_KEY" \
 	-d "$(jq -Rs '{"contents":[{"parts":[{"text": . }]}]}' | sed -e "s/\"text\": \"/\"text\": \"$1:\n/")" \
-	| jq -r '.candidates[].content.parts[].text'
+	> "$JSON"
+
+if [ $? -ne 0 ]; then
+	rm "$JSON"
+	exit 1
+fi
+
+REASON="$(cat $JSON | jq -r '.candidates[].finishReason' 2> /dev/null)"
+if ! [ "$REASON" = "" ]; then
+	if ! cat $JSON | jq -r '.candidates[].content.parts[].text' 2> /dev/null; then
+		>&2 echo "Server terminated for the following reason: $REASON"
+		rm "$JSON"
+		exit 1
+	fi
+else
+	>&2 echo "Server terminated for an unknowing reason."
+	rm "$JSON"
+	exit 1
+fi
+
+rm "$JSON"
