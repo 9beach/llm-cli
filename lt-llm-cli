@@ -38,6 +38,11 @@ TEMPFILE=$(mktemp)
 rm $TEMPFILE
 split -l $LT_LINES - $TEMPFILE
 
+if ! [ -f "$TEMPFILE"* ]; then
+	>&2 echo "Empty input."
+	exit 1
+fi
+
 for i in $TEMPFILE*; do
 	"$LT_CLI" "$LT_PARAM" < $i
 
