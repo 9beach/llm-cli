@@ -50,7 +50,7 @@ function try_once {
 }
 
 function retry {
-	>&2 echo "${GRAY}An error occurred, retrying in $LT_SLEEP_SEC seconds.${NOCOLOR}"
+	>&2 echo -e "${GRAY}An error occurred, retrying in $LT_SLEEP_SEC seconds.${NOCOLOR}"
 	try_once $1
 }
 
