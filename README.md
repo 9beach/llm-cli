@@ -86,6 +86,8 @@ cat my-text | gemini-cli "Is this correct?"
 
 ### `deepl-cli`
 
+The `deepl-cli` only performs translation, unlike `gemini-cli` and `claude-cli`, and the parameter for specifying the language must be two letters.
+
 ```sh
 export DEEPL_API_KEY="Your-API-Key"
 cat my-text | deepl-cli KO
