@@ -31,7 +31,7 @@ sudo chmod a+rx /usr/local/bin/gemini-cli /usr/local/bin/claude-cli /usr/local/b
 ### `claude-cli`
 
 ```sh
-export ANTHROPIC_API_KEY="Your-API-Key"
+export ANTHROPIC_API_KEY="your-api-key-here"
 cat my-text | claude-cli "refine the sentence"
 ```
 
@@ -63,7 +63,7 @@ cat my-text | claude-cli ko
 ### `gemini-cli`
 
 ```sh
-export GEMINI_API_KEY="Your-API-Key"
+export GEMINI_API_KEY="your-api-key-here"
 cat my-text | gemini-cli "hi"
 ```
 
@@ -89,7 +89,7 @@ cat my-text | gemini-cli "Is this correct?"
 The `deepl-cli` only performs translation, unlike `gemini-cli` and `claude-cli`, and the parameter for specifying the language must be two letters.
 
 ```sh
-export DEEPL_API_KEY="Your-API-Key"
+export DEEPL_API_KEY="your-api-key-here"
 cat my-text | deepl-cli KO
 ```
 
