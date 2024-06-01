@@ -54,11 +54,17 @@ In Linux, `xclip -selection clipboard -o` outputs the content from the clipboard
 xclip -selection clipboard -o | claude-cli "translate to korean"
 ```
 
+The `claude-cli` automatically recognizes translation requests when the execution argument is two characters long. Therefore, if `ko` is given, it internally changes to `translate to ko without comment`. The same applies to `gemini-cli`.
+
+```sh
+cat my-text | claude-cli ko
+```
+
 ### `gemini-cli`
 
 ```sh
 export GEMINI_API_KEY="Your-API-Key"
-cat my-text | gemini-cli "Translate to Hindi."
+cat my-text | gemini-cli "hi"
 ```
 
 An example output:
@@ -107,7 +113,6 @@ cat very-long-text | lt-llm-cli deepl-cli KO > very-long-text.ko
 ```
 
 In the example below, `lt-llm-cli` submits text in chunks of 200 lines per request. To view the default values for various parameters, please refer to the [lt-llm-cli source code](https://github.com/9beach/llm-cli/blob/main/lt-llm-cli#L12).
-
 
 ```sh
 cat very-long-text | LT_LINES=200 lt-llm-cli deepl-cli KO > very-long-text.ko

@@ -14,11 +14,14 @@ fi
 
 JSON="$(mktemp)"
 
+COMMAND=$1
+[ ${#COMMAND} -eq 2 ] && COMMAND="Translate to $1 without comment."
+
 curl \
 	-s \
 	-H 'Content-Type: application/json' \
 	-X POST "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=$GEMINI_API_KEY" \
-	-d "$(jq -Rs '{"contents":[{"parts":[{"text": . }]}]}' | sed -e "s/\"text\": \"/\"text\": \"$1:\n/")" \
+	-d "$(jq -Rs '{"contents":[{"parts":[{"text": . }]}]}' | sed -e "s/\"text\": \"/\"text\": \"$COMMAND:\n/")" \
 	> "$JSON"
 
 if [ $? -ne 0 ]; then

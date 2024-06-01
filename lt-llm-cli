@@ -56,8 +56,8 @@ function retry {
 
 TEMPFILE=$(mktemp)
 split -l $LT_LINES - $TEMPFILE
-
 rm $TEMPFILE
+
 for i in $TEMPFILE*; do
 	if ! [ -f "$i" ]; then
 		>&2 echo "Empty input."
