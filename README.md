@@ -108,11 +108,14 @@ DeepL API supports many languages. Please visit the [supported languages](https:
 
 ### `lt-llm-cli`
 
-For exceptionally lengthy texts, you can utilize `lt-llm-cli`, which efficiently processes the content by dividing it into smaller segments and submitting them multiple times. To customize the number of lines per submission and the interval between each submission, you can set the environment variables `LT_LINES` and `LT_SLEEP_SEC`, respectively, allowing you to fine-tune the performance according to your specific requirements.
+For exceptionally lengthy texts, you can utilize `lt-llm-cli`, which efficiently processes the content by dividing it into smaller segments and submitting them multiple times.
+
 
 ```sh
 cat very-long-text | lt-llm-cli deepl-cli KO > very-long-text.ko
 ```
+
+To customize the number of lines per submission and the interval between each submission, you can set the environment variables `LT_LINES` and `LT_SLEEP_SEC`, respectively, allowing you to fine-tune the performance according to your specific requirements. By default, sentences that fail to translate will also be output. To prevent this, set `LT_FAILED_OUTPUT=no`.
 
 In the example below, `lt-llm-cli` submits text in chunks of 200 lines per request. To view the default values for various parameters, please refer to the [lt-llm-cli source code](https://github.com/9beach/llm-cli/blob/main/lt-llm-cli#L12).
 
@@ -121,7 +124,7 @@ cat very-long-text | LT_LINES=200 lt-llm-cli deepl-cli KO > very-long-text.ko
 ```
 
 ```text
-cat very-long-text | lt-llm-cli claude-cli "Translate to Hungarian." > very-long-text.hu
+cat very-long-text | LT_LINES=2 LT_SLEEP_SEC=0 LT_FAILED_OUTPUT=no lt-llm-cli gemini-cli "Translate to Hungarian." > very-long-text.hu
 ```
 
 ```text

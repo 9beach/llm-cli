@@ -13,9 +13,8 @@ GRAY='\033[1;37m'
 RED='\033[31m'
 NOCOLOR='\033[0m'
 
-if [ -z "$LT_SLEEP_SEC" ]; then
-	LT_SLEEP_SEC=4
-fi
+[ -z "$LT_SLEEP_SEC" ] && LT_SLEEP_SEC=3
+[ -z "$LT_FAILED_OUTPUT" ] && LT_FAILED_OUTPUT="yes"
 
 case $(basename "$LT_CLI") in
 	deepl-cli)
@@ -32,11 +31,11 @@ case $(basename "$LT_CLI") in
 		exit 1
 esac
 
-REAL_FIRST="yes"
+FIRST_TRY="yes"
 
 function try_once {
-	if [ "$REAL_FIRST" = "yes" ]; then
-		REAL_FIRST="no"
+	if [ "$FIRST_TRY" = "yes" ]; then
+		FIRST_TRY="no"
 	else 
 		sleep $LT_SLEEP_SEC
 	fi
@@ -71,7 +70,14 @@ for i in $TEMPFILE*; do
 	[ $LAST_ERROR -ne 0 ] && retry $i
 
 	# Give up this part
-	[ $LAST_ERROR -ne 0 ] && >&2 echo -e "${RED}Failed to process a part of the input.${NOCOLOR}"
+	if [ $LAST_ERROR -ne 0 ]; then
+		if [ "$LT_FAILED_OUTPUT" = "yes" ]; then
+			cat "$i"
+			>&2 echo -e "${RED}Failed to process a part of the input. The original text is shown above.${NOCOLOR}"
+		else
+			>&2 echo -e "${RED}Failed to process a part of the input.${NOCOLOR}"
+		fi
+	fi
 done
 
 rm $TEMPFILE*
